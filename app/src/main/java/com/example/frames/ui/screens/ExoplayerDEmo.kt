@@ -28,17 +28,12 @@ fun ExoPlayerWithMediaRetrivelView() {
     val context = LocalContext.current
 
     val exoPlayer = ExoPlayer.Builder(context).build().apply {
-        setVideoFrameMetadataListener(object :VideoFrameMetadataListener{
-
-            override fun onVideoFrameAboutToBeRendered(
-                presentationTimeUs: Long,
-                releaseTimeNs: Long,
-                format: Format,
-                mediaFormat: MediaFormat?
-            ) {
-                Log.d(TAG, "infos: $format")
-            }
-        })
+        setVideoFrameMetadataListener { presentationTimeUs, releaseTimeNs, format, mediaFormat ->
+            Log.d(
+                TAG,
+                "infos: $format"
+            )
+        }
     }
     val mediaSource = remember(videoUrl) {
         MediaItem.fromUri(videoUrl)

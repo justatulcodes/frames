@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.media.MediaScannerConnection
 import android.util.Log
 import androidx.compose.runtime.withFrameMillis
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.frames.TAG
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,6 +17,9 @@ import org.opencv.core.CvType
 import org.opencv.core.Mat
 import org.opencv.videoio.VideoWriter
 import java.io.File
+
+
+
 
 suspend fun saveFramesAsVideoAviWithMediaRefresh(context: Context, frames: List<Bitmap>, outputFilePath: String) {
     if (frames.isEmpty()) { return }
@@ -29,7 +33,7 @@ suspend fun saveFramesAsVideoAviWithMediaRefresh(context: Context, frames: List<
         Log.d(TAG,"path is $finalOutputPath")
         val fourcc = VideoWriter.fourcc('M', 'J', 'P', 'G')
         val frameSize = org.opencv.core.Size(frames[0].width.toDouble(), frames[0].height.toDouble())
-        val videoWriter = VideoWriter(finalOutputPath, fourcc, 30.0, frameSize, true)
+        val videoWriter = VideoWriter(finalOutputPath, fourcc, 24.0, frameSize, true)
         if (!videoWriter.isOpened) {
             Log.e(TAG, "Failed to open VideoWriter for the path: $finalOutputPath")
             return
